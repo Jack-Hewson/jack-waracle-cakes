@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import Lightbox from './components/cakeLightbox.vue';
+import Lightbox from './components/cakeLightbox/cakeLightbox.vue';
 import { fetchCakes, fetchCakeById, addCake, deleteCake, cakes, selectedCake, showLightbox } from './services/cakeService';
 import type { Cake } from './models/cake';
 import './App.css';
@@ -26,7 +26,7 @@ onMounted(fetchCakes);
 
     <ul>
       <li v-for="cake in cakes" :key="cake.id" @click="selectCake(cake)" class="cake-item">
-        <img :src="cake.imageUrl" />
+        <img :src="cake.imageUrl || 'src/assets/cake.svg'" />
         <span>{{ cake.name }}</span>
         <button @click.stop="deleteCake(cake.id)" class="delete-btn">Delete</button>
       </li>

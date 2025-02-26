@@ -1,26 +1,26 @@
 button {
-    margin-top: 10px;
-    height: fit-content;
-    flex: none;
-}
-  
-main {
-    width: 90vw;
-    height: 90vh;
+  margin-top: 10px;
+  height: fit-content;
+  flex: none;
 }
 
-img { 
-    height: 5rem;
+main {
+  width: 90vw;
+  height: 90vh;
+}
+
+img {
+  height: 5rem;
 }
 
 .cake-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .delete-btn {
-    margin-left: 10px;
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.delete-btn {
+  margin-left: 10px;
+}

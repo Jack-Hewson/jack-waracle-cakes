@@ -12,7 +12,6 @@ const newCakeComment = ref('');
 const newCakeYumFactor = ref(1);
 const isEditing = computed(() => !!props.cake);
 
-
 const errorMessages = ref<{ [key: string]: string }>({
   name: '',
   comment: '',

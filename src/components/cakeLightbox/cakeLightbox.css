@@ -16,8 +16,8 @@
   border-radius: 10px;
   width: 20rem;
   display: flex;
-  flex-direction: column; /* Ensures vertical layout for form elements */
-  justify-content: space-between; /* Distribute space between form and buttons */
+  flex-direction: column;
+  justify-content: space-between;
   height: 20rem;
 }
 
