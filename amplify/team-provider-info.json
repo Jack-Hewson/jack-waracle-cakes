@@ -15,14 +15,20 @@
       "function": {
         "cakesFunction": {
           "deploymentBucketName": "amplify-jackwaraclecakes-dev-8fd0e-deployment",
-          "s3Key": "amplify-builds/cakesFunction-4f716d336731556e3251-build.zip"
+          "s3Key": "amplify-builds/cakesFunction-456879536e71624d3932-build.zip"
+        },
+        "warCakeFunction": {
+          "deploymentBucketName": "amplify-jackwaraclecakes-dev-8fd0e-deployment",
+          "s3Key": "amplify-builds/warCakeFunction-694a7435477032317059-build.zip"
         }
       },
       "storage": {
-        "cakesData": {}
+        "cakesData": {},
+        "warCakeTable": {}
       },
       "api": {
-        "cakesApi": {}
+        "cakesApi": {},
+        "warCakeApi": {}
       }
     }
   }

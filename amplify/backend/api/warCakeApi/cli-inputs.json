@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/cakes": {
+      "name": "/cakes",
+      "lambdaFunction": "warCakeFunction",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

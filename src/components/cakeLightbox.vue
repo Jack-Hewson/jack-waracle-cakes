@@ -2,8 +2,8 @@
   <div class="lightbox">
     <div class="lightbox-content">
       <h2>Add a New Cake</h2>
-      <label for="cakeName">Cake Name:</label>
-      <input v-model="newCakeName" id="cakeName" type="text" placeholder="Enter cake name"
+      <label for="name">Cake Name:</label>
+      <input v-model="newCakeName" id="name" type="text" placeholder="Enter cake name"
         :class="{ error: errorMessages.name }" :readonly="isEditing" />
       <div v-if="errorMessages.name" class="error-message">{{ errorMessages.name }}</div>
 
@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import type { Cake } from '@/models/cake';
 import './cakeLightbox.css';
-import { computed, onMounted, ref, type PropType } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 const props = defineProps<{
   cake: Cake | null;

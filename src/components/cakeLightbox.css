@@ -1,48 +1,47 @@
 .lightbox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .lightbox-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 20rem;
-    display: flex;
-    flex-direction: column; /* Ensures vertical layout for form elements */
-    justify-content: space-between; /* Distribute space between form and buttons */
-    height: 20rem;
-  }
-  
-  input.error {
-    border: 2px solid red;
-  }
-  
-  .error-message {
-    color: red;
-    font-size: 0.875rem;
-    margin-top: 5px;
-  }
-  
-  button {
-    margin-top: 10px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: auto; /* Push the buttons to the bottom */
-  }
-  
-  button {
-    flex: 1; /* Makes the buttons fill the space evenly */
-    margin: 0 5px; /* Adds a little gap between the buttons */
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.lightbox-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 20rem;
+  display: flex;
+  flex-direction: column; /* Ensures vertical layout for form elements */
+  justify-content: space-between; /* Distribute space between form and buttons */
+  height: 20rem;
+}
+
+input.error {
+  border: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 5px;
+}
+
+button {
+  margin-top: 10px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+button {
+  flex: 1;
+  margin: 0 5px;
+}

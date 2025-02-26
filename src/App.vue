@@ -4,6 +4,7 @@ import { get, post } from 'aws-amplify/api';
 import type { Cake } from './models/cake';
 import Lightbox from './components/cakeLightbox.vue';
 import './App.css';
+import { v4 as uuidv4 } from 'uuid';
 
 const cakes = ref<Cake[]>([]);
 const selectedCake = ref<Cake | null>(null);
@@ -12,13 +13,16 @@ const showLightbox = ref(false);
 async function fetchCakes() {
   try {
     const restOperation = get({
-      apiName: 'cakesApi',
+      apiName: 'warCakeApi',
       path: '/cakes',
     });
     const { body } = await restOperation.response;
     const response = await body.json();
     if (Array.isArray(response)) {
-      cakes.value = [...response as unknown as Cake[]];
+      cakes.value = response.map((cake: any) => ({
+        ...cake,
+        id: cake.id || uuidv4(),
+      })) as Cake[];
     } else {
       console.log('Unexpected response structure:', response);
     }
@@ -27,23 +31,15 @@ async function fetchCakes() {
   }
 }
 
-function selectCake(cake: Cake) {
-  selectedCake.value = cake;
-  showLightbox.value = true;
-}
-
-function closeLightbox() {
-  showLightbox.value = false;
-  selectedCake.value = null;
-}
 
 async function addCake(cakeData: { name: string, comment: string, yumFactor: number }) {
   try {
     const restOperation = post({
-      apiName: 'cakesApi',
+      apiName: 'warCakeApi',
       path: '/cakes',
       options: {
         body: {
+          id: Date.now() + Math.floor(Math.random() * 1000),
           name: cakeData.name,
           comment: cakeData.comment,
           imageUrl: 'src/assets/images/cake-img.jpg',
@@ -54,13 +50,31 @@ async function addCake(cakeData: { name: string, comment: string, yumFactor: num
 
     const { body } = await restOperation.response;
     const response = await body.json();
-    console.log(response);
 
-    fetchCakes();
-    showLightbox.value = false;
+    if (response && response.id) {
+      // Assuming the response includes the new cake with its 'id'
+      console.log('Cake added:', response);
+      fetchCakes(); // Refresh the list of cakes
+      showLightbox.value = false;
+    } else {
+      console.log('Failed to add cake, response missing id:', response);
+    }
   } catch (e) {
     console.log('POST call failed:', e);
   }
+
+  fetchCakes()
+}
+
+
+function selectCake(cake: Cake) {
+  selectedCake.value = cake;
+  showLightbox.value = true;
+}
+
+function closeLightbox() {
+  showLightbox.value = false;
+  selectedCake.value = null;
 }
 
 onMounted(fetchCakes);

@@ -13,6 +13,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "warCakeApi": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "warCakeFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "function": {
@@ -30,6 +44,25 @@
           ],
           "category": "storage",
           "resourceName": "cakesData"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "warCakeFunction": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributeEnvMap": {
+            "Arn": "TABLE_ARN",
+            "Name": "TABLE_NAME"
+          },
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "storage",
+          "resourceName": "warCakeTable"
         }
       ],
       "providerPlugin": "awscloudformation",
@@ -52,10 +85,30 @@
           "resourceName": "cakesFunction"
         }
       ]
+    },
+    "AMPLIFY_function_warCakeFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "warCakeFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_warCakeFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "warCakeFunction"
+        }
+      ]
     }
   },
   "storage": {
     "cakesData": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    },
+    "warCakeTable": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
     }
