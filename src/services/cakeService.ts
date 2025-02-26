@@ -81,7 +81,7 @@ export async function addCake(cakeData: {
           id: Date.now() + Math.floor(Math.random() * 1000),
           name: cakeData.name,
           comment: cakeData.comment,
-          imageUrl: "src/assets/images/cake-img.jpg",
+          imageUrl: "src/assets/cake.svg",
           yumFactor: cakeData.yumFactor,
         },
       },

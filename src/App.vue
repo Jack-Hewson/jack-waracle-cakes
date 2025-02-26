@@ -25,7 +25,7 @@ onMounted(fetchCakes);
 
     <ul>
       <li v-for="cake in cakes" :key="cake.id" @click="selectCake(cake)" class="cake-item">
-        <img :src="cake.imageUrl || 'src/assets/cake.svg'" />
+        <img :src="cake.imageUrl" />
         <span>{{ cake.name }}</span>
         <button @click.stop="deleteCake(cake.id)" class="delete-btn">Delete</button>
       </li>
