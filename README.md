@@ -1,3 +1,11 @@
+A simple application using Vue3, Amplify, API Gateway, and DynamoDB
+
+This was complete on a guest account on a someone else's laptop as I am currently house sitting and the access to the laptop from my previous employer has been deactivated
+
+As this is the case, there were restrictions on things I could do due to lack of admin rights:
+- I was unable to install any styling (such as vuetify or bootstrap)
+- I was unable to push any changes to AWS Amplify's function, therefore making it impossible for me to correctly specify what should be returned from a "/cakes" request
+
 ## AWS Amplify Vue.js Starter Template
 
 This repository provides a starter template for creating applications using Vue.js and AWS Amplify, emphasizing easy setup for authentication, API, and database capabilities.

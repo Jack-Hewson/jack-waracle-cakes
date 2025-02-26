@@ -3,20 +3,11 @@
   "aws_dynamodb_all_tables_region": "eu-west-2",
   "aws_dynamodb_table_schemas": [
     {
-      "tableName": "cakesTable-dev",
-      "region": "eu-west-2"
-    },
-    {
       "tableName": "warCakeTable-dev",
       "region": "eu-west-2"
     }
   ],
   "aws_cloud_logic_custom": [
-    {
-      "name": "cakesApi",
-      "endpoint": "https://2jlxzjid0h.execute-api.eu-west-2.amazonaws.com/dev",
-      "region": "eu-west-2"
-    },
     {
       "name": "warCakeApi",
       "endpoint": "https://futi5chn2c.execute-api.eu-west-2.amazonaws.com/dev",

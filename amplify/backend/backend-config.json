@@ -1,19 +1,5 @@
 {
   "api": {
-    "cakesApi": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "cakesFunction"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    },
     "warCakeApi": {
       "dependsOn": [
         {
@@ -30,25 +16,6 @@
     }
   },
   "function": {
-    "cakesFunction": {
-      "build": true,
-      "dependsOn": [
-        {
-          "attributeEnvMap": {
-            "Arn": "TABLE_ARN",
-            "Name": "TABLE_NAME"
-          },
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "storage",
-          "resourceName": "cakesData"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
-    },
     "warCakeFunction": {
       "build": true,
       "dependsOn": [
@@ -70,22 +37,6 @@
     }
   },
   "parameters": {
-    "AMPLIFY_function_cakesFunction_deploymentBucketName": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "cakesFunction"
-        }
-      ]
-    },
-    "AMPLIFY_function_cakesFunction_s3Key": {
-      "usedBy": [
-        {
-          "category": "function",
-          "resourceName": "cakesFunction"
-        }
-      ]
-    },
     "AMPLIFY_function_warCakeFunction_deploymentBucketName": {
       "usedBy": [
         {
@@ -104,10 +55,6 @@
     }
   },
   "storage": {
-    "cakesData": {
-      "providerPlugin": "awscloudformation",
-      "service": "DynamoDB"
-    },
     "warCakeTable": {
       "providerPlugin": "awscloudformation",
       "service": "DynamoDB"
