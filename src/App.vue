@@ -51,13 +51,11 @@ async function addCake(cakeData: { name: string, comment: string, yumFactor: num
     const { body } = await restOperation.response;
     const response = await body.json();
 
-    if (response && response.id) {
+    if (response) {
       // Assuming the response includes the new cake with its 'id'
       console.log('Cake added:', response);
       fetchCakes(); // Refresh the list of cakes
       showLightbox.value = false;
-    } else {
-      console.log('Failed to add cake, response missing id:', response);
     }
   } catch (e) {
     console.log('POST call failed:', e);
