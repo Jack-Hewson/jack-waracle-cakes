@@ -5,7 +5,6 @@ import { fetchCakes, fetchCakeById, addCake, deleteCake, cakes, selectedCake, sh
 import type { Cake } from './models/cake';
 import './App.css';
 
-
 function selectCake(cake: Cake) {
   fetchCakeById(cake.id);
 }
