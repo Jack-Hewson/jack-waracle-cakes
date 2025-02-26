@@ -3,7 +3,13 @@ import { ref, onMounted } from 'vue';
 // import { API } from 'aws-amplify';
 import { get, post } from 'aws-amplify/api';
 
-const cakes = ref([]);  // Array of cakes
+interface Cake {
+  name: string;
+  comment: string;
+}
+
+const cakes = ref<{ name: string; comment: string }[]>([]);
+
 const newCakeName = ref('');  // New cake name
 const newCakeComment = ref('');  // New cake comment
 
@@ -18,13 +24,26 @@ async function fetchCakes() {
     const response = await body.json();
     console.log('GET call succeeded: ', response);
     
-    // Assuming the response is an array of cakes, update cakes properly
-    cakes.value = [...response]; // This will spread the array into cakes.value
+    // Check that response is an array of Cake objects and filter out null values
+    if (Array.isArray(response)) {
+      cakes.value = [...response as unknown as Cake[]]; // Now this will work, and TypeScript will infer the type
+    } else {
+      console.log('Unexpected response structure:', response);
+    }
 
     console.log("Cakes", cakes.value); // Check the actual cakes array
-  } catch (e) {
-    console.log('GET call failed: ', JSON.parse(e.response.body));
+  }  catch (e) {
+    // Check if `e` is an object with `response` and `body`
+    if (isErrorWithResponse(e)) {
+      console.log('GET call failed: ', JSON.parse(e.response.body));
+    } else {
+      console.log('GET call failed: ', e);
+    }
   }
+}
+
+function isErrorWithResponse(e: unknown): e is { response: { body: string } } {
+  return typeof e === 'object' && e !== null && 'response' in e && 'body' in (e as any).response;
 }
 
 async function addCake() {
