@@ -1,0 +1,29 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-jackwaraclecakes-dev-8fd0e-authRole",
+      "UnauthRoleArn": "arn:aws:iam::503561452616:role/amplify-jackwaraclecakes-dev-8fd0e-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::503561452616:role/amplify-jackwaraclecakes-dev-8fd0e-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-jackwaraclecakes-dev-8fd0e-deployment",
+      "UnauthRoleName": "amplify-jackwaraclecakes-dev-8fd0e-unauthRole",
+      "StackName": "amplify-jackwaraclecakes-dev-8fd0e",
+      "StackId": "arn:aws:cloudformation:eu-west-2:503561452616:stack/amplify-jackwaraclecakes-dev-8fd0e/1a45f830-f432-11ef-a789-0202abced499",
+      "AmplifyAppId": "d3rk3ztmulkncs"
+    },
+    "categories": {
+      "function": {
+        "cakesFunction": {
+          "deploymentBucketName": "amplify-jackwaraclecakes-dev-8fd0e-deployment",
+          "s3Key": "amplify-builds/cakesFunction-4f716d336731556e3251-build.zip"
+        }
+      },
+      "storage": {
+        "cakesData": {}
+      },
+      "api": {
+        "cakesApi": {}
+      }
+    }
+  }
+}
