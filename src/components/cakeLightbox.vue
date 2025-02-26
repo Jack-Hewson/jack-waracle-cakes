@@ -29,13 +29,13 @@
 </template>
 
 <script setup lang="ts">
+import type { Cake } from '@/models/cake';
 import './cakeLightbox.css';
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, type PropType } from 'vue';
 
-const props = defineProps({
-  cake: Object,
-  show: Boolean
-});
+const props = defineProps<{
+  cake: Cake | null;
+}>();
 
 const newCakeName = ref('');
 const newCakeComment = ref('');
