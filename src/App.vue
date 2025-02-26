@@ -1,17 +1,23 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-// import { API } from 'aws-amplify';
 import { get, post } from 'aws-amplify/api';
 
 interface Cake {
+  id: number;
   name: string;
   comment: string;
+  imageUrl: string;
+  yumFactor: number;
 }
 
-const cakes = ref<{ name: string; comment: string }[]>([]);
+const cakes = ref<Cake[]>([]);
 
-const newCakeName = ref('');  // New cake name
-const newCakeComment = ref('');  // New cake comment
+const newCakeName = ref('');
+const newCakeComment = ref('')
+const newCakeImageUrl = ref('')
+const newCakeYumFactor = ref(1);
+
+const errorMessages = ref<string[]>([]);
 
 async function fetchCakes() {
   try {
@@ -20,33 +26,30 @@ async function fetchCakes() {
       path: '/cakes',
     });
     const { body } = await restOperation.response;
-
     const response = await body.json();
-    console.log('GET call succeeded: ', response);
-    
-    // Check that response is an array of Cake objects and filter out null values
     if (Array.isArray(response)) {
-      cakes.value = [...response as unknown as Cake[]]; // Now this will work, and TypeScript will infer the type
+      cakes.value = [...response as unknown as Cake[]];
     } else {
       console.log('Unexpected response structure:', response);
     }
-
-    console.log("Cakes", cakes.value); // Check the actual cakes array
-  }  catch (e) {
-    // Check if `e` is an object with `response` and `body`
-    if (isErrorWithResponse(e)) {
-      console.log('GET call failed: ', JSON.parse(e.response.body));
-    } else {
-      console.log('GET call failed: ', e);
-    }
+  } catch (e) {
+    console.log('GET call failed:', e);
   }
 }
 
-function isErrorWithResponse(e: unknown): e is { response: { body: string } } {
-  return typeof e === 'object' && e !== null && 'response' in e && 'body' in (e as any).response;
-}
-
 async function addCake() {
+  // Validate inputs
+  errorMessages.value = [];
+  if (!newCakeName.value) errorMessages.value.push('Name is required');
+  if (newCakeComment.value.length < 5 || newCakeComment.value.length > 200) {
+    errorMessages.value.push('Comment must be between 5 and 200 characters');
+  }
+  if (!newCakeImageUrl.value) errorMessages.value.push('Image URL is required');
+  if (newCakeYumFactor.value < 1 || newCakeYumFactor.value > 5) errorMessages.value.push('Yum Factor must be between 1 and 5');
+
+  // If there are validation errors, do not submit
+  if (errorMessages.value.length > 0) return;
+
   try {
     const restOperation = post({
       apiName: 'cakesApi',
@@ -55,23 +58,24 @@ async function addCake() {
         body: {
           name: newCakeName.value,
           comment: newCakeComment.value,
+          imageUrl: newCakeImageUrl.value,
+          yumFactor: newCakeYumFactor.value,
         },
       },
     });
 
     const { body } = await restOperation.response;
     const response = await body.json();
-
-    console.log('POST call succeeded');
     console.log(response);
 
-    // Reset input fields after adding the cake
     newCakeName.value = '';
     newCakeComment.value = '';
+    newCakeImageUrl.value = '';
+    newCakeYumFactor.value = 1;
 
     fetchCakes();
   } catch (e) {
-    console.log('POST call failed: ', e);
+    console.log('POST call failed:', e);
   }
 }
 
@@ -81,6 +85,13 @@ onMounted(fetchCakes);
 <template>
   <main>
     <h1>Cakes</h1>
+
+    <div v-if="errorMessages.length > 0" class="error-messages">
+      <ul>
+        <li v-for="(message, index) in errorMessages" :key="index">{{ message }}</li>
+      </ul>
+    </div>
+
     <div>
       <label for="cakeName">Cake Name:</label>
       <input v-model="newCakeName" id="cakeName" type="text" placeholder="Enter cake name" />
@@ -88,11 +99,20 @@ onMounted(fetchCakes);
       <label for="cakeComment">Cake Comment:</label>
       <input v-model="newCakeComment" id="cakeComment" type="text" placeholder="Enter cake comment" />
 
+      <label for="cakeImageUrl">Image URL:</label>
+      <input v-model="newCakeImageUrl" id="cakeImageUrl" type="text" placeholder="Enter cake image URL" />
+
+      <label for="yumFactor">Yum Factor:</label>
+      <input v-model="newCakeYumFactor" id="yumFactor" type="number" min="1" max="5" />
+
       <button @click="addCake">Add Cake</button>
     </div>
+
     <ul>
-      <li v-for="cake in cakes" :key="cake.name">
-        {{ cake.name }} - {{ cake.comment }}
+      <li v-for="cake in cakes" :key="cake.id">
+        <img :src="'src/assets/images/cake-img.jpg'" alt="cake image"
+          :style="{ maxHeight: '2rem' }" />
+        {{ cake.name }}
       </li>
     </ul>
   </main>
