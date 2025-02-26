@@ -1,3 +1,6 @@
+Can also be viewed here:
+https://main.d2kehg6tzrzgbv.amplifyapp.com/
+
 A simple application using Vue3, Amplify, API Gateway, and DynamoDB
 
 This was complete on a guest account on a someone else's laptop as I am currently house sitting and the access to the laptop from my previous employer has been deactivated
