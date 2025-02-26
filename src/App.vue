@@ -1,21 +1,12 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { get, post } from 'aws-amplify/api';
+import type { Cake } from './models/cake';
 import Lightbox from './components/cakeLightbox.vue';
 import './App.css';
 
-interface Cake {
-  id: number;
-  name: string;
-  comment: string;
-  imageUrl: string;
-  yumFactor: number;
-}
-
 const cakes = ref<Cake[]>([]);
-
-const errorMessages = ref<string[]>([]);
-
+const selectedCake = ref<Cake | null>(null);
 const showLightbox = ref(false);
 
 async function fetchCakes() {
@@ -36,16 +27,17 @@ async function fetchCakes() {
   }
 }
 
+function selectCake(cake: Cake) {
+  selectedCake.value = cake;
+  showLightbox.value = true;
+}
+
+function closeLightbox() {
+  showLightbox.value = false;
+  selectedCake.value = null;
+}
+
 async function addCake(cakeData: { name: string, comment: string, yumFactor: number }) {
-  errorMessages.value = [];
-  if (!cakeData.name) errorMessages.value.push('Name is required');
-  if (cakeData.comment.length < 5 || cakeData.comment.length > 200) {
-    errorMessages.value.push('Comment must be between 5 and 200 characters');
-  }
-  if (cakeData.yumFactor < 1 || cakeData.yumFactor > 5) errorMessages.value.push('Yum Factor must be between 1 and 5');
-
-  if (errorMessages.value.length > 0) return;
-
   try {
     const restOperation = post({
       apiName: 'cakesApi',
@@ -78,25 +70,15 @@ onMounted(fetchCakes);
   <main>
     <h1>Cakes</h1>
 
-    <div v-if="errorMessages.length > 0" class="error-messages">
-      <ul>
-        <li v-for="(message, index) in errorMessages" :key="index">{{ message }}</li>
-      </ul>
-    </div>
-
     <button @click="showLightbox = true">Add Cake</button>
 
     <ul>
-      <li v-for="cake in cakes" :key="cake.id">
+      <li v-for="cake in cakes" :key="cake.id" @click="selectCake(cake)">
         <img :src="cake.imageUrl" :style="{ maxHeight: '2rem' }" />
         {{ cake.name }}
       </li>
     </ul>
 
-    <Lightbox
-      v-if="showLightbox"
-      @submit-cake="addCake"
-      @cancel="showLightbox = false"
-    />
+    <Lightbox v-if="showLightbox" :cake="selectedCake" @submit-cake="addCake" @cancel="closeLightbox" />
   </main>
 </template>

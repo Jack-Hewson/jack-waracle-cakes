@@ -2,26 +2,27 @@
   <div class="lightbox">
     <div class="lightbox-content">
       <h2>Add a New Cake</h2>
-
       <label for="cakeName">Cake Name:</label>
       <input v-model="newCakeName" id="cakeName" type="text" placeholder="Enter cake name"
-        :class="{ error: errorMessages.name }" />
+        :class="{ error: errorMessages.name }" :readonly="isEditing" />
       <div v-if="errorMessages.name" class="error-message">{{ errorMessages.name }}</div>
+
 
       <label for="cakeComment">Cake Comment:</label>
       <input v-model="newCakeComment" id="cakeComment" type="text" placeholder="Enter cake comment"
-        :class="{ error: errorMessages.comment }" />
+        :class="{ error: errorMessages.comment }" :readonly="isEditing" />
       <div v-if="errorMessages.comment" class="error-message">{{ errorMessages.comment }}</div>
+
 
       <label for="yumFactor">Yum Factor:</label>
       <input v-model="newCakeYumFactor" id="yumFactor" type="number" min="1" max="5"
-        :class="{ error: errorMessages.yumFactor }" />
+        :class="{ error: errorMessages.yumFactor }" :readonly="isEditing" />
       <div v-if="errorMessages.yumFactor" class="error-message">{{ errorMessages.yumFactor }}</div>
 
 
       <div class="button-container">
-        <button @click="submitCake">Submit Cake</button>
         <button @click="cancel">Cancel</button>
+        <button v-if="!isEditing" @click="submitCake">Submit Cake</button>
       </div>
     </div>
   </div>
@@ -29,11 +30,18 @@
 
 <script setup lang="ts">
 import './cakeLightbox.css';
-import { ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
+
+const props = defineProps({
+  cake: Object,
+  show: Boolean
+});
 
 const newCakeName = ref('');
 const newCakeComment = ref('');
 const newCakeYumFactor = ref(1);
+const isEditing = computed(() => !!props.cake);
+
 
 const errorMessages = ref<{ [key: string]: string }>({
   name: '',
@@ -45,6 +53,14 @@ const emit = defineEmits<{
   (e: 'submit-cake', data: { name: string, comment: string, yumFactor: number }): void;
   (e: 'cancel'): void;
 }>();
+
+onMounted(() => {
+  if (props.cake) {
+    newCakeName.value = props.cake.name || '';
+    newCakeComment.value = props.cake.comment || '';
+    newCakeYumFactor.value = props.cake.yumFactor || 1;
+  }
+});
 
 const submitCake = () => {
   errorMessages.value = { name: '', comment: '', yumFactor: '' };
