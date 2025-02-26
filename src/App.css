@@ -1,0 +1,10 @@
+button {
+    margin-top: 10px;
+    height: fit-content;
+    flex: none;
+}
+  
+main {
+    width: 90vw;
+    height: 90vh;
+}

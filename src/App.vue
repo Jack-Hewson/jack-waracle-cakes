@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue';
 import { get, post } from 'aws-amplify/api';
 import Lightbox from './components/cakeLightbox.vue';
+import './App.css';
 
 interface Cake {
   id: number;
@@ -99,9 +100,3 @@ onMounted(fetchCakes);
     />
   </main>
 </template>
-
-<style scoped>
-button {
-  margin-top: 10px;
-}
-</style>
