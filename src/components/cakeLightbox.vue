@@ -50,6 +50,7 @@ const submitCake = () => {
     comment: newCakeComment.value,
     yumFactor: newCakeYumFactor.value,
   });
+
   clearForm();
 };
 
@@ -68,7 +69,7 @@ const clearForm = () => {
 <template>
   <div class="lightbox">
     <div class="lightbox-content">
-      <h2>Add a new cake</h2>
+      <h2>{{ isEditing ? 'View cake' : 'Add a new cake' }}</h2>
       <label for="name">Cake name:</label>
       <input v-model="newCakeName" id="name" type="text" placeholder="Enter cake name"
         :class="{ error: errorMessages.name }" :readonly="isEditing" />
