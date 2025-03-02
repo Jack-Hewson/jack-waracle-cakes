@@ -1,13 +1,12 @@
 import { get, post, del } from "aws-amplify/api";
 import { ref } from "vue";
 import type { Cake } from "../models/cake";
-import { v4 as uuidv4 } from "uuid";
 
 const cakes = ref<Cake[]>([]);
 const selectedCake = ref<Cake | null>(null);
 const showLightbox = ref(false);
 
-function isCake(response: any): response is Cake {
+function isCake(response: Cake) {
   return (
     response &&
     typeof response.id === "number" &&
@@ -29,10 +28,12 @@ export async function fetchCakes() {
     if (Array.isArray(response)) {
       cakes.value = response as unknown as Cake[];
     } else {
-      console.log("Unexpected response structure:", response);
+      console.error("Unexpected response structure:", response);
+      throw new Error("Invalid response format");
     }
   } catch (e) {
-    console.log("GET call failed:", e);
+    console.error("GET call failed:", e);
+    throw e;
   }
 }
 
@@ -45,14 +46,20 @@ export async function fetchCakeById(id: number) {
     const { body } = await restOperation.response;
     const response = await body.json();
 
-    if (response && isCake(response)) {
-      selectedCake.value = response;
+    if (
+      Array.isArray(response) &&
+      response.length > 0 &&
+      isCake(response[0] as unknown as Cake)
+    ) {
+      selectedCake.value = response[0] as unknown as Cake;
       showLightbox.value = true;
     } else {
       console.log("Cake not found or invalid response");
+      selectedCake.value = null;
     }
   } catch (e) {
     console.log("GET call for single cake failed:", e);
+    selectedCake.value = null;
   }
 }
 

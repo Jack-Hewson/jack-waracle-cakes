@@ -65,9 +65,12 @@ const convertUrlType = (param, type) => {
  ************************************/
 
 app.get(path, async function (req, res) {
-  const params = {
+  var params = {
     TableName: tableName,
-    Select: "ALL_ATTRIBUTES",
+    ProjectionExpression: "id, #cakeName, imageUrl",
+    ExpressionAttributeNames: {
+      "#cakeName": "name",
+    },
   };
 
   try {
@@ -80,7 +83,7 @@ app.get(path, async function (req, res) {
 });
 
 /************************************
- * HTTP Get method to query objects JACK JACK*
+ * HTTP Get method to query objects *
  ************************************/
 
 app.get(path + hashKeyPath, async function (req, res) {

@@ -1,9 +1,22 @@
 <script setup lang="ts">
-import { onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import Lightbox from './components/cakeLightbox/cakeLightbox.vue';
 import { fetchCakes, fetchCakeById, addCake, deleteCake, cakes, selectedCake, showLightbox } from './services/cakeService';
 import type { Cake } from './models/cake';
 import './App.css';
+
+const loading = ref(true);
+const loadingError = ref(false);
+
+async function loadCakes() {
+  try {
+    await fetchCakes();
+  } catch {
+    loadingError.value = true;
+  } finally {
+    loading.value = false;
+  }
+}
 
 function selectCake(cake: Cake) {
   fetchCakeById(cake.id);
@@ -14,7 +27,7 @@ function closeLightbox() {
   selectedCake.value = null;
 }
 
-onMounted(fetchCakes);
+onMounted(loadCakes);
 </script>
 
 <template>
@@ -23,7 +36,11 @@ onMounted(fetchCakes);
 
     <button @click="showLightbox = true">Add cake</button>
 
-    <ul>
+    <div v-if="loading" class="spinner"></div>
+
+    <p v-if="loadingError" class="error-message">Error loading data</p>
+
+    <ul v-else-if="!loadingError">
       <li v-for="cake in cakes" :key="cake.id" @click="selectCake(cake)" class="cake-item">
         <img :src="cake.imageUrl" />
         <span>{{ cake.name }}</span>

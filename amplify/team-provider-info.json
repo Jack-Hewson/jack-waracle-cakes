@@ -15,7 +15,7 @@
       "function": {
         "warCakeFunction": {
           "deploymentBucketName": "amplify-jackwaraclecakes-dev-8fd0e-deployment",
-          "s3Key": "amplify-builds/warCakeFunction-4a3031362f5363744251-build.zip"
+          "s3Key": "amplify-builds/warCakeFunction-544e644f314e5550316a-build.zip"
         }
       },
       "storage": {
