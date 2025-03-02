@@ -40,7 +40,7 @@ export async function fetchCakeById(id: number) {
   try {
     const restOperation = get({
       apiName: "warCakeApi",
-      path: `/cakes/object/${id}`,
+      path: `/cakes/${id}`,
     });
     const { body } = await restOperation.response;
     const response = await body.json();
@@ -105,7 +105,7 @@ export async function deleteCake(cakeId: number) {
   try {
     const restOperation = del({
       apiName: "warCakeApi",
-      path: `/cakes/object/${cakeId}`,
+      path: `/cakes/${cakeId}`,
     });
 
     const { body } = (await restOperation.response) as unknown as {
