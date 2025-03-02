@@ -10,14 +10,18 @@
   align-items: center;
 }
 
+.lightbox-content,
+.lightbox-fields {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .lightbox-content {
   background: white;
   padding: 20px;
   border-radius: 10px;
   width: 20rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   height: 20rem;
 }
 

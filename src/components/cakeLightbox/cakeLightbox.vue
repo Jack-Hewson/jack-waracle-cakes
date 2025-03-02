@@ -68,24 +68,25 @@ const clearForm = () => {
 <template>
   <div class="lightbox">
     <div class="lightbox-content">
-      <h2>{{ isEditing ? 'View cake' : 'Add a new cake' }}</h2>
-      <label for="name">Cake name:</label>
-      <input v-model="newCakeName" id="name" type="text" placeholder="Enter cake name"
-        :class="{ error: errorMessages.name }" :readonly="isEditing" />
-      <div v-if="errorMessages.name" class="error-message">{{ errorMessages.name }}</div>
+      <div class="lightbox-fields">
+        <h2>{{ isEditing ? 'View cake' : 'Add a new cake' }}</h2>
+        <label for="name">Cake name:</label>
+        <input v-model="newCakeName" id="name" type="text" placeholder="Enter cake name"
+          :class="{ error: errorMessages.name }" :readonly="isEditing" />
+        <div v-if="errorMessages.name" class="error-message">{{ errorMessages.name }}</div>
 
 
-      <label for="cakeComment">Cake comment:</label>
-      <input v-model="newCakeComment" id="cakeComment" type="text" placeholder="Enter cake comment"
-        :class="{ error: errorMessages.comment }" :readonly="isEditing" />
-      <div v-if="errorMessages.comment" class="error-message">{{ errorMessages.comment }}</div>
+        <label for="cakeComment">Cake comment:</label>
+        <input v-model="newCakeComment" id="cakeComment" type="text" placeholder="Enter cake comment"
+          :class="{ error: errorMessages.comment }" :readonly="isEditing" />
+        <div v-if="errorMessages.comment" class="error-message">{{ errorMessages.comment }}</div>
 
 
-      <label for="yumFactor">Yum factor:</label>
-      <input v-model="newCakeYumFactor" id="yumFactor" type="number" min="1" max="5"
-        :class="{ error: errorMessages.yumFactor }" :readonly="isEditing" />
-      <div v-if="errorMessages.yumFactor" class="error-message">{{ errorMessages.yumFactor }}</div>
-
+        <label for="yumFactor">Yum factor:</label>
+        <input v-model="newCakeYumFactor" id="yumFactor" type="number" min="1" max="5"
+          :class="{ error: errorMessages.yumFactor }" :readonly="isEditing" />
+        <div v-if="errorMessages.yumFactor" class="error-message">{{ errorMessages.yumFactor }}</div>
+      </div>
 
       <div class="button-container">
         <button @click="cancel">Cancel</button>

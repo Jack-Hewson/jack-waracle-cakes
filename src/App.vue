@@ -38,7 +38,7 @@ onMounted(loadCakes);
 
     <div v-if="loading" class="spinner"></div>
 
-    <p v-if="loadingError" class="error-message">Error loading data</p>
+    <p v-if="loadingError" class="loading-message">Error loading data</p>
 
     <ul v-else-if="!loadingError">
       <li v-for="cake in cakes" :key="cake.id" @click="selectCake(cake)" class="cake-item">
